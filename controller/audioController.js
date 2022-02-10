@@ -1,26 +1,24 @@
-const db = require("../models/audiodetails");
+const db = require("../models");
 const { getAudioDurationInSeconds } = require("get-audio-duration");
 exports.getAudios = (req, res) => {
   // res.json({ message: "hey" });
   // res.send("heyy");
-  db.findAll().then((audios) => {
+  db.audioDetails.findAll().then((audios) => {
     if (Object.keys(audios).length == 0) {
       res.send("no data found");
-      return;
+      return false;
     }
     res.send(audios);
   });
 };
 
 exports.addAudio = (req, res) => {
-  // console.log(req.file);
   if (
-    req.file.mimetype == "audio/basic" ||
-    req.file.mimetype == "audio/mpeg" ||
-    req.file.mimetype == "audio/vnd.wav" ||
-    req.file.mimetype == "audio/vorbis" ||
-    req.file.mimetype == "audio/ogg" ||
-    req.file.mimetype == "audio/mp3"
+    req.file.mimetype === "audio/basic" ||
+    req.file.mimetype === "audio/mpeg" ||
+    req.file.mimetype === "audio/vnd.wav" ||
+    req.file.mimetype === "audio/vorbis" ||
+    req.file.mimetype === "audio/ogg"
   ) {
     getAudioDurationInSeconds(req.file.path)
       .then((duration) => {
@@ -31,14 +29,14 @@ exports.addAudio = (req, res) => {
         //   duration = duration / 60;
         //   duration = duration.toFixed(2) + " minutes";
         // }
-        db.create({
-          audioFile: req.file.originalname,
-          audioLength: duration,
-          createdAt: Date.now(),
-          modifiedAt: Date.now(),
-        }).then((data) => {
-          res.json({ message: "File Uploaded!", data });
-        });
+        db.audioDetails
+          .create({
+            audioFile: req.file.originalname,
+            audioLength: duration,
+          })
+          .then((data) => {
+            res.json({ message: "File Uploaded!", data });
+          });
       })
       .catch((err) => {
         console.error(err);
