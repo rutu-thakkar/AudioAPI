@@ -1,23 +1,23 @@
 {
   "development": {
-    "username": "sql6471726",
-    "password": "bu1sJx797E",
-    "database": "sql6471726",
-    "host": "sql6.freemysqlhosting.net",
+    "username": "userfordb",
+    "password": "dbpassword",
+    "database": "audiodatabase",
+    "host": "db4free.net",
     "dialect": "mysql"
   },
   "test": {
-    "username": "sql6471726",
-    "password": "bu1sJx797E",
-    "database": "sql6471726",
-    "host": "sql6.freemysqlhosting.net",
+    "username": "userfordb",
+    "password": "dbpassword",
+    "database": "audiodatabase",
+    "host": "db4free.net",
     "dialect": "mysql"
   },
   "production": {
-    "username": "sql6471726",
-    "password": "bu1sJx797E",
-    "database": "sql6471726",
-    "host": "sql6.freemysqlhosting.net",
+    "username": "userfordb",
+    "password": "dbpassword",
+    "database": "audiodatabase",
+    "host": "db4free.net",
     "dialect": "mysql"
   }
 }
