@@ -1,18 +1,19 @@
 const db = require("../models/audiodetails");
 const { getAudioDurationInSeconds } = require("get-audio-duration");
 exports.getAudios = (req, res) => {
-  db
-    .findAll()
-    .then((data) => {
-      if (Object.keys(data).length === 0) {
-        res.json({ message: "No data found" });
-        return;
-      }
-      res.json({ message: "Data", data });
-    })
-    .catch((err) => {
-      res.json({ message: "**--" + err.message });
-    });
+  res.json("hey");
+  // db
+  //   .findAll()
+  //   .then((data) => {
+  //     if (Object.keys(data).length === 0) {
+  //       res.json({ message: "No data found" });
+  //       return;
+  //     }
+  //     res.json({ message: "Data", data });
+  //   })
+  //   .catch((err) => {
+  //     res.json({ message: "**--" + err.message });
+  //   });
 };
 
 exports.addAudio = (req, res) => {
@@ -34,15 +35,13 @@ exports.addAudio = (req, res) => {
         //   duration = duration / 60;
         //   duration = duration.toFixed(2) + " minutes";
         // }
-        db
-          .create({
-            audioFile: req.file.originalname,
-            audioLength: duration,
-            createdAt: Date.now(),
-          })
-          .then((data) => {
-            res.json({ message: "File Uploaded!", data });
-          });
+        db.create({
+          audioFile: req.file.originalname,
+          audioLength: duration,
+          createdAt: Date.now(),
+        }).then((data) => {
+          res.json({ message: "File Uploaded!", data });
+        });
       })
       .catch((err) => {
         console.error(err);
