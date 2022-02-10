@@ -38,6 +38,7 @@ exports.addAudio = (req, res) => {
           .create({
             audioFile: req.file.originalname,
             audioLength: duration,
+            createdAt: Date.now(),
           })
           .then((data) => {
             res.json({ message: "File Uploaded!", data });
