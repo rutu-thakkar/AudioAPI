@@ -1,7 +1,7 @@
 const db = require("../models");
 const { getAudioDurationInSeconds } = require("get-audio-duration");
 exports.getAudios = (req, res) => {
-  db.audiodetails
+  db.audioDetails
     .findAll()
     .then((data) => {
       if (Object.keys(data).length === 0) {
@@ -34,7 +34,7 @@ exports.addAudio = (req, res) => {
         //   duration = duration / 60;
         //   duration = duration.toFixed(2) + " minutes";
         // }
-        db.audiodetails
+        db.audioDetails
           .create({
             audioFile: req.file.originalname,
             audioLength: duration,
