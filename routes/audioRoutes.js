@@ -13,7 +13,9 @@ const storage = multer.diskStorage({
 });
 
 var upload = multer({ storage: storage });
-
+route.get("/", (req, res) => {
+  res.send("hello world");
+});
 route.get("/getAudios", audioController.getAudios);
 route.post("/addAudio", upload.single("audioFile"), audioController.addAudio);
 
