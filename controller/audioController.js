@@ -2,7 +2,18 @@ const db = require("../models/audiodetails");
 const { getAudioDurationInSeconds } = require("get-audio-duration");
 exports.getAudios = (req, res) => {
   // res.json({ message: "hey" });
-  res.send("heyy");
+  // res.send("heyy");
+  db.findAll()
+    .then((audios) => {
+      if (Object.keys(audios).length == 0) {
+        res.json({ message: "No data found" });
+        return;
+      }
+      res.json({ message: "Data", audio: audios });
+    })
+    .catch((err) => {
+      res.json({ message: err.message });
+    });
 };
 
 exports.addAudio = (req, res) => {
