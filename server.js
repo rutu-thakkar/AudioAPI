@@ -9,6 +9,7 @@ const db = require("./models");
 app.use(cors());
 app.use(express.json());
 app.use("/audio", audioRoutes);
+app.set("view engine", "ejs");
 
 db.audioDetails
   .sync()

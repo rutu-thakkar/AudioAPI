@@ -1,5 +1,8 @@
 const db = require("../models");
+const path = require("path");
 const { getAudioDurationInSeconds } = require("get-audio-duration");
+
+//Get Audio
 exports.getAudios = (req, res) => {
   // res.json({ message: "hey" });
   // res.send("heyy");
@@ -8,11 +11,18 @@ exports.getAudios = (req, res) => {
       res.send("no data found");
       return false;
     }
-    res.send(audios);
+    // res.send(audios);
+    // console.log(audios);
+    res.render("viewAudio", { audios });
   });
 };
 
+// Add Audio File
 exports.addAudio = (req, res) => {
+  // res.send("hey");
+
+  // console.log(req);
+
   if (
     req.file.mimetype === "audio/basic" ||
     req.file.mimetype === "audio/mpeg" ||
@@ -31,7 +41,7 @@ exports.addAudio = (req, res) => {
         // }
         db.audioDetails
           .create({
-            audioFile: req.file.originalname,
+            audioFile: req.file.path,
             audioLength: duration,
           })
           .then((data) => {
@@ -44,4 +54,12 @@ exports.addAudio = (req, res) => {
   } else {
     res.json({ message: "File type must be audio" });
   }
+};
+
+//Play Audio
+exports.getAudio = (req, res) => {
+  const { s } = req.params;
+  const Filepath = path.join(__dirname, "../uploads/", s);
+  console.log(Filepath);
+  res.render("singleAudio", { Filepath });
 };
