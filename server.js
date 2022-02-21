@@ -5,11 +5,14 @@ require("dotenv").config();
 const port = process.env.PORT || 3001;
 const audioRoutes = require("./routes/audioRoutes");
 const db = require("./models");
+const path = require("path");
 
 app.use(cors());
 app.use(express.json());
 app.use("/audio", audioRoutes);
 app.set("view engine", "ejs");
+// app.set("/uploads", express.static(path.join(__dirname, "/uploads")));
+app.use(express.static(path.join(__dirname, "assets")));
 
 db.audioDetails
   .sync()

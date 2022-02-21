@@ -1,6 +1,8 @@
 const db = require("../models");
 const path = require("path");
+const axios = require("axios");
 const { getAudioDurationInSeconds } = require("get-audio-duration");
+const httpAdapter = require("axios/lib/adapters/http");
 
 //Get Audio
 exports.getAudios = (req, res) => {
@@ -59,7 +61,37 @@ exports.addAudio = (req, res) => {
 //Play Audio
 exports.getAudio = (req, res) => {
   const { s } = req.params;
-  const Filepath = path.join(__dirname, "../uploads/", s);
-  console.log(Filepath);
-  res.render("singleAudio", { Filepath });
+  const filePath = path.join("../uploads/", s);
+  console.log(filePath);
+  res.render("singleAudio", { filePath });
+
+  // axios
+  //   .get(, {
+  //     responseType: "stream",
+  //     adapter: httpAdapter,
+  //     "Content-Range": "bytes 16561-8065611",
+  //   })
+  //   .then((Response) => {
+  //     const stream = Response.data;
+
+  //     res.set("content-type", "audio/mp3");
+  //     res.set("accept-ranges", "bytes");
+  //     res.set("content-length", Response.headers["content-length"]);
+  //     console.log(Response);
+
+  //     stream.on("data", (chunk) => {
+  //       res.write(chunk);
+  //     });
+
+  //     stream.on("error", (err) => {
+  //       res.sendStatus(404);
+  //     });
+
+  //     stream.on("end", () => {
+  //       res.end();
+  //     });
+  //   })
+  //   .catch((Err) => {
+  //     console.log(Err.message);
+  //   });
 };
