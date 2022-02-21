@@ -18,5 +18,5 @@ route.get("/", (req, res) => {
 });
 route.get("/getAudios", audioController.getAudios);
 route.post("/addAudio", upload.single("audioFile"), audioController.addAudio);
-route.get("/uploads/:s", audioController.getAudio);
+route.get("/assets/uploads/:s", audioController.getAudio);
 module.exports = route;

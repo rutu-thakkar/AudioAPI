@@ -61,9 +61,10 @@ exports.addAudio = (req, res) => {
 //Play Audio
 exports.getAudio = (req, res) => {
   const { s } = req.params;
+  // const filePath = path.join("../uploads/", s);
   const filePath = path.join("../uploads/", s);
   console.log(filePath);
-  res.render("singleAudio", { filePath });
+  res.render("singleAudio", { fileName: s });
 
   // axios
   //   .get(, {
