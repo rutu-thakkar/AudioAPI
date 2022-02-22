@@ -9,9 +9,9 @@
 <body>
     
     <% for(i=0; i < audios.length; i++) { %>
-        <% let s = audios[i].audioFile.substr(8) %>
+        <!-- <% console.log(audios[i].audioFile.substr(15)) %> -->
+        <% let s = audios[i].audioFile.substr(15) %>
         <a href="./assets/uploads/<%= s %>"><%= s %></a>
-        
     <% } %>
 </body>
 </html>
