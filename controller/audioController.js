@@ -19,9 +19,10 @@ const getAudios = (req, res) => {
       res.send("no data found");
       return false;
     }
-    // res.send(audios);
+
+    res.json({ message: "Data", audios });
     // console.log(audios);
-    res.render("viewAudio", { audios });
+    // res.render("viewAudio", { audios });
     // res.json({ audios });
   });
 };
@@ -31,7 +32,7 @@ const addAudio = (req, res) => {
     req.file.path,
     {
       resource_type: "raw",
-      public_id: `AudioUploads/${Date.now() + req.file.originalname}`,
+      public_id: `AudioUploads/${Date.now() + "-" + req.file.originalname}`,
     },
 
     // Send cloudinary response or catch error
@@ -106,36 +107,5 @@ const addAudio = (req, res) => {
 //   //   filePath: filePath,
 //   // });
 //   res.render("singleAudio", { fileName: s });
-
-// axios
-//   .get(, {
-//     responseType: "stream",
-//     adapter: httpAdapter,
-//     "Content-Range": "bytes 16561-8065611",
-//   })
-//   .then((Response) => {
-//     const stream = Response.data;
-
-//     res.set("content-type", "audio/mp3");
-//     res.set("accept-ranges", "bytes");
-//     res.set("content-length", Response.headers["content-length"]);
-//     console.log(Response);
-
-//     stream.on("data", (chunk) => {
-//       res.write(chunk);
-//     });
-
-//     stream.on("error", (err) => {
-//       res.sendStatus(404);
-//     });
-
-//     stream.on("end", () => {
-//       res.end();
-//     });
-//   })
-//   .catch((Err) => {
-//     console.log(Err.message);
-//   });
-// };
 
 module.exports = { addAudio, getAudios };
