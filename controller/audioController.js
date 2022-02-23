@@ -32,30 +32,31 @@ const addAudio = (req, res) => {
   // console.log(req.file);
   cloudinary.uploader.upload(
     req.file.path,
-    {
-      resource_type: "raw",
-      public_id: `AudioUploads/${Date.now() + "-" + req.file.originalname}`,
-    },
+    // {
+    //   resource_type: "raw",
+    //   public_id: `AudioUploads/${Date.now() + "-" + req.file.originalname}`,
+    // },
 
     // Send cloudinary response or catch error
     (err, audio) => {
       if (err) return res.send(err);
+      res.json(audio);
       // fs.unlinkSync(req.file.path);
       // res.send(audio);
-      console.log(audio.url);
-      getAudioDurationInSeconds(audio.url).then((duration) => {
-        db.audioDetails
-          .create({
-            audioFile: audio.url,
-            audioLength: duration,
-          })
-          .then((data) => {
-            res.json({ message: "File Uploaded!", data });
-          })
-          .catch((err) => {
-            res.json({ error: err.message });
-          });
-      });
+      // console.log(audio.url);
+      // getAudioDurationInSeconds(audio.url).then((duration) => {
+      //   db.audioDetails
+      //     .create({
+      //       audioFile: audio.url,
+      //       audioLength: duration,
+      //     })
+      //     .then((data) => {
+      //       res.json({ message: "File Uploaded!", data });
+      //     })
+      //     .catch((err) => {
+      //       res.json({ error: err.message });
+      //     });
+      // });
     }
   );
 };
