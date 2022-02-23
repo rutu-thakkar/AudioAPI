@@ -6,6 +6,7 @@ const port = process.env.PORT || 3001;
 const audioRoutes = require("./routes/audioRoutes");
 const db = require("./models");
 const path = require("path");
+const bodyParser = require("body-parser");
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
