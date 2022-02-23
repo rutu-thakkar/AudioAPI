@@ -22,12 +22,24 @@ const bodyParser = require("body-parser");
 //   },
 // };
 
-app.all("/*", function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "*");
-  next();
-});
+// app.all("/*", function (req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "*");
+//   next();
+// });
 // app.use(cors(corsOptions));
+
+app.use((req, res, next) => {
+  const allowedOrigins = [
+    "https://audio--manager.herokuapp.com",
+    "http://localhost:3000",
+  ];
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  }
+  return next();
+});
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.json());
