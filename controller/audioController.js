@@ -28,7 +28,7 @@ const getAudios = (req, res) => {
 };
 
 const addAudio = (req, res) => {
-  res.set("Access-Control-Allow-Origin", "*");
+  // res.set("Access-Control-Allow-Origin", "*");
   // console.log(req.file);
   cloudinary.uploader.upload(
     req.file.path,
