@@ -3,7 +3,11 @@ const app = express();
 const route = express.Router();
 const audioController = require("../controller/audioController");
 const multer = require("multer");
-const { addAudio, getAudios } = require("../controller/audioController");
+const {
+  addAudio,
+  getAudios,
+  addText,
+} = require("../controller/audioController");
 const fileUpload = require("express-fileupload");
 const streamifier = require("streamifier");
 const fs = require("fs");
@@ -14,23 +18,23 @@ const fs = require("fs");
 //   })
 // );
 
-// const storage = multer.diskStorage({
-//   // destination: (req, file, cb) => {
-//   //   cb(null, "./assets/uploads");
-//   // },
-//   filename: (req, file, cb) => {
-//     cb(null, Date.now() + "-" + file.originalname);
-//   },
-// });
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./assets/uploads");
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
 
-// var upload = multer({ storage: storage });
-var upload = multer();
+var upload = multer({ storage: storage });
+// var upload = multer();
 route.get("/", (req, res) => {
   res.render("addAudio");
 });
 route.get("/getAudios", getAudios);
-console.log("hey");
 route.post("/addAudio", upload.single("audioFile"), addAudio);
+route.post("/addText", addText);
 
 // cloudinary.uploader.upload((error, response) => {
 //   if (error) {

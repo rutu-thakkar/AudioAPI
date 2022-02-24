@@ -54,7 +54,6 @@ const bodyParser = require("body-parser");
 //   })
 // );
 
-
 app.use((req, res, next) => {
   //allow access from every, elminate CORS
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -78,9 +77,16 @@ app.use(express.static(path.join(__dirname, "assets")));
 db.audioDetails
   .sync({ force: false })
   .then(() => {
-    app.listen(port, (req, res) => {
-      console.log(`listening in http://localhost:${port}`);
-    });
+    db.user
+      .sync({ force: true })
+      .then(() => {
+        app.listen(port, (req, res) => {
+          console.log(`listening in http://localhost:${port}`);
+        });
+      })
+      .catch((err) => {
+        console.log(`error: ${err}`);
+      });
   })
   .catch((err) => {
     console.error(err);

@@ -113,4 +113,22 @@ const addAudio = (req, res) => {
 //   // });
 //   res.render("singleAudio", { fileName: s });
 
-module.exports = { addAudio, getAudios };
+const addText = (req, res) => {
+  // console.log(req);
+  db.user
+    .create({
+      name: req.body.name,
+    })
+    .then((name) => {
+      if (!name) {
+        res.json({ message: "No data inserted!" });
+        return;
+      }
+      res.json({ message: "Data inserted successfully!", name });
+    })
+    .catch((err) => {
+      res.json({ message: err.message });
+    });
+};
+
+module.exports = { addAudio, getAudios, addText };
