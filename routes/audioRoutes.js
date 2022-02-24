@@ -15,9 +15,9 @@ const fs = require("fs");
 // );
 
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./assets/uploads");
-  },
+  // destination: (req, file, cb) => {
+  //   cb(null, "./assets/uploads");
+  // },
   filename: (req, file, cb) => {
     cb(null, Date.now() + "-" + file.originalname);
   },
