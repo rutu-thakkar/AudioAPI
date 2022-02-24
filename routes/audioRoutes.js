@@ -14,17 +14,17 @@ const fs = require("fs");
 //   })
 // );
 
-const storage = multer.diskStorage({
-  // destination: (req, file, cb) => {
-  //   cb(null, "./assets/uploads");
-  // },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname);
-  },
-});
+// const storage = multer.diskStorage({
+//   // destination: (req, file, cb) => {
+//   //   cb(null, "./assets/uploads");
+//   // },
+//   filename: (req, file, cb) => {
+//     cb(null, Date.now() + "-" + file.originalname);
+//   },
+// });
 
-var upload = multer({ storage: storage });
-// var upload = multer();
+// var upload = multer({ storage: storage });
+var upload = multer();
 route.get("/", (req, res) => {
   res.render("addAudio");
 });
