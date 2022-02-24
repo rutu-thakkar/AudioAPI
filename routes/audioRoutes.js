@@ -14,8 +14,6 @@ const fs = require("fs");
 //   })
 // );
 
-
-
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "./assets/uploads");
@@ -33,37 +31,35 @@ route.get("/", (req, res) => {
 route.get("/getAudios", getAudios);
 route.post("/addAudio", upload.single("audioFile"), addAudio);
 
+// cloudinary.uploader.upload((error, response) => {
+//   if (error) {
+//     console.log(error);
+//     return;
+//   }
+//   console.log(response);
+//   res.send("File Uploaded");
+// });
 
+//   let streamUpload = (req) => {
+//     return new Promise((resolve, reject) => {
+//       let stream = cloudinary.uploader.upload_stream((error, result) => {
+//         if (result) {
+//           resolve(result);
+//         } else {
+//           reject(error);
+//         }
+//       });
+//       streamifier.createReadStream(req.file.buffer).pipe(stream);
+//     });
+//   };
 
-  // cloudinary.uploader.upload((error, response) => {
-  //   if (error) {
-  //     console.log(error);
-  //     return;
-  //   }
-  //   console.log(response);
-  //   res.send("File Uploaded");
-  // });
+//   async function upload(req) {
+//     let result = await streamUpload(req);
+//     // console.log(result);
+//     res.send("File Uploaded");
+//   }
 
-  //   let streamUpload = (req) => {
-  //     return new Promise((resolve, reject) => {
-  //       let stream = cloudinary.uploader.upload_stream((error, result) => {
-  //         if (result) {
-  //           resolve(result);
-  //         } else {
-  //           reject(error);
-  //         }
-  //       });
-  //       streamifier.createReadStream(req.file.buffer).pipe(stream);
-  //     });
-  //   };
-
-  //   async function upload(req) {
-  //     let result = await streamUpload(req);
-  //     // console.log(result);
-  //     res.send("File Uploaded");
-  //   }
-
-  //   upload(req);
+//   upload(req);
 
 //   return new Promise((resolve, reject) => {
 //     let stream = cloudinary.uploader.upload_stream((error, result) => {
