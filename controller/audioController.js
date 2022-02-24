@@ -3,11 +3,12 @@ const path = require("path");
 const axios = require("axios");
 const { getAudioDurationInSeconds } = require("get-audio-duration");
 const cloudinary = require("cloudinary").v2;
+require("dotenv").config({ path: "../.env" });
 
 cloudinary.config({
   cloud_name: "rutu",
-  api_key: "372743348695928",
-  api_secret: "sg82sPOO5F9Fe2gWZKK9V7EDMoI",
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
 });
 
 //Get Audio
@@ -32,31 +33,32 @@ const addAudio = (req, res) => {
   // console.log(req.file);
   cloudinary.uploader.upload(
     req.file.path,
-    // {
-    //   resource_type: "raw",
-    //   public_id: `AudioUploads/${Date.now() + "-" + req.file.originalname}`,
-    // },
+    {
+      resource_type: "raw",
+      public_id: `AudioUploads/${Date.now() + "-" + req.file.originalname}`,
+    },
 
     // Send cloudinary response or catch error
     (err, audio) => {
       if (err) return res.send(err);
-      res.json(audio);
+      // res.json(audio);
       // fs.unlinkSync(req.file.path);
       // res.send(audio);
       // console.log(audio.url);
-      // getAudioDurationInSeconds(audio.url).then((duration) => {
-      //   db.audioDetails
-      //     .create({
-      //       audioFile: audio.url,
-      //       audioLength: duration,
-      //     })
-      //     .then((data) => {
-      //       res.json({ message: "File Uploaded!", data });
-      //     })
-      //     .catch((err) => {
-      //       res.json({ error: err.message });
-      //     });
-      // });
+      getAudioDurationInSeconds(audio.url).then((duration) => {
+        db.audioDetails
+          .create({
+            audioName: req.file.originalname,
+            audioFile: audio.url,
+            audioLength: duration,
+          })
+          .then((data) => {
+            res.json({ message: "File Uploaded!", data });
+          })
+          .catch((err) => {
+            res.json({ error: err.message });
+          });
+      });
     }
   );
 };

@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   audioDetails.init(
     {
+      audioName: DataTypes.STRING,
       audioFile: DataTypes.STRING,
       audioLength: DataTypes.STRING,
     },

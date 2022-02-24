@@ -8,6 +8,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
+      audioName: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       audioFile: {
         type: Sequelize.STRING,
         allowNull: false,

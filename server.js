@@ -22,13 +22,13 @@ const bodyParser = require("body-parser");
 //   },
 // };
 
-app.all("/*", function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+// app.all("/*", function (req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
 
-  res.header("Access-Control-Allow-Headers", "*");
-  next();
-});
-app.use(cors());
+//   res.header("Access-Control-Allow-Headers", "*");
+//   next();
+// });
+// app.use(cors());
 
 // app.use((req, res, next) => {
 //   const allowedOrigins = [
@@ -47,6 +47,12 @@ app.use(cors());
 //   next();
 // });
 
+app.use(
+  cors({
+    origin: ["http://localhost:3000/"],
+  })
+);
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.json());
@@ -56,7 +62,7 @@ app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "assets")));
 
 db.audioDetails
-  .sync()
+  .sync({ force: false })
   .then(() => {
     app.listen(port, (req, res) => {
       console.log(`listening in http://localhost:${port}`);
