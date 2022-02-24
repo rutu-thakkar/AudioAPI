@@ -29,6 +29,7 @@ route.get("/", (req, res) => {
   res.render("addAudio");
 });
 route.get("/getAudios", getAudios);
+console.log("hey");
 route.post("/addAudio", upload.single("audioFile"), addAudio);
 
 // cloudinary.uploader.upload((error, response) => {

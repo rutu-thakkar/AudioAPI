@@ -40,7 +40,7 @@ const addAudio = (req, res) => {
 
     // Send cloudinary response or catch error
     (err, audio) => {
-      if (err) return res.send(err);
+      if (err) return res.send(err.message);
       // res.json(audio);
       // fs.unlinkSync(req.file.path);
       // res.send(audio);
