@@ -19,8 +19,8 @@ const storage = multer.diskStorage({
   },
 });
 
-// var upload = multer({ storage: storage });
-var upload = multer();
+var upload = multer({ storage: storage });
+// var upload = multer();
 route.get("/", (req, res) => {
   res.render("addAudio");
 });
