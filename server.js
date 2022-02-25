@@ -56,10 +56,7 @@ const bodyParser = require("body-parser");
 
 app.use((req, res, next) => {
   //allow access from every, elminate CORS
-  res.setHeader("Access-Control-Allow-Origin", [
-    "http://localhost:3001",
-    "http://localhost:3000",
-  ]);
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3001");
   res.removeHeader("x-powered-by");
   //set the allowed HTTP methods to be requested
   res.setHeader("Access-Control-Allow-Methods", "POST");
