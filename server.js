@@ -78,7 +78,7 @@ db.audioDetails
   .sync({ force: false })
   .then(() => {
     db.user
-      .sync({ force: true })
+      .sync({ force: false })
       .then(() => {
         app.listen(port, (req, res) => {
           console.log(`listening in http://localhost:${port}`);
