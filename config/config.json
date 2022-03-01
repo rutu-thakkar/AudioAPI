@@ -14,10 +14,10 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "userfordb",
-    "password": "dbpassword",
-    "database": "audiodatabase",
-    "host": "db4free.net",
+    "username": "root",
+    "password": "root",
+    "database": "audiodb",
+    "host": "localhost",
     "dialect": "mysql"
   }
 }
