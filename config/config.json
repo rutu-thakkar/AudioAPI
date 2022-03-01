@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "root",
-    "password": "root",
-    "database": "audiodb",
-    "host": "localhost",
+    "username": "userfordb",
+    "password": "dbpassword",
+    "database": "audiodatabase",
+    "host": "db4free.net",
     "dialect": "mysql"
   },
   "test": {
@@ -14,10 +14,10 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": "root",
-    "database": "audiodb",
-    "host": "localhost",
+    "username": "userfordb",
+    "password": "dbpassword",
+    "database": "audiodatabase",
+    "host": "db4free.net",
     "dialect": "mysql"
   }
 }
