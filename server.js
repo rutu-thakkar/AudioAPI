@@ -88,7 +88,7 @@ app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "assets")));
 
 db.audioDetails
-  .sync({ force: false })
+  .sync({ force: true })
   .then(() => {
     db.user
       .sync({ force: false })

@@ -19,13 +19,13 @@ const storage = multer.diskStorage({
   },
 });
 
-// var upload = multer({ storage: storage });
-var upload = multer();
+var upload = multer({ storage: storage });
+// var upload = multer();
 route.get("/", (req, res) => {
   res.render("addAudio");
 });
 route.get("/getAudios", getAudios);
-route.post("/addAudio", upload.single("sampleFile"), addAudio);
+route.post("/addAudio", upload.single("audioFile"), addAudio);
 // route.post("/addAudio", addAudio);
 route.post("/addText", addText);
 

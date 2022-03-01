@@ -38,45 +38,45 @@ const getAudios = (req, res) => {
   });
 };
 
-const addAudio = (req, res) => {
-  let streamUpload = (req) => {
-    return new Promise((resolve, reject) => {
-      let stream = cloudinary.uploader.upload_stream((error, result) => {
-        if (result) {
-          resolve(result);
-        } else {
-          reject(error);
-        }
-      });
+// const addAudio = (req, res) => {
+  // let streamUpload = (req) => {
+  //   return new Promise((resolve, reject) => {
+  //     let stream = cloudinary.uploader.upload_stream((error, result) => {
+  //       if (result) {
+  //         resolve(result);
+  //       } else {
+  //         reject(error);
+  //       }
+  //     });
 
-      streamifier.createReadStream(req.file.buffer).pipe(stream);
-    });
-  };
+  //     streamifier.createReadStream(req.file.buffer).pipe(stream);
+  //   });
+  // };
 
-  async function upload(req) {
-    try {
-      let result = await streamUpload(req);
-      console.log(result);
-      getAudioDurationInSeconds(result.url).then((duration) => {
-        db.audioDetails
-          .create({
-            audioName: req.file.originalname,
-            audioFile: result.url,
-            audioLength: duration,
-          })
-          .then((data) => {
-            res.json({ message: "File Uploaded!", data });
-          })
-          .catch((err) => {
-            res.json({ error: err.message });
-          });
-      });
-    } catch (err) {
-      console.error(err);
-    }
-  }
+  // async function upload(req) {
+  //   try {
+  //     let result = await streamUpload(req);
+  //     console.log(result);
+  //     getAudioDurationInSeconds(result.url).then((duration) => {
+  //       db.audioDetails
+  //         .create({
+  //           audioName: req.file.originalname,
+  //           audioFile: result.url,
+  //           audioLength: duration,
+  //         })
+  //         .then((data) => {
+  //           res.json({ message: "File Uploaded!", data });
+  //         })
+  //         .catch((err) => {
+  //           res.json({ error: err.message });
+  //         });
+  //     });
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // }
 
-  upload(req);
+  // upload(req);
 
   // console.log(req);
   // cloudinary.uploader.upload(
@@ -109,46 +109,50 @@ const addAudio = (req, res) => {
   //     });
   //   }
   // );
-};
+  // };
 
-// Add Audio File
-// const addAudio = async (req, res) => {
-//   // res.send("hey");
+  // Add Audio File
+  const addAudio = async (req, res) => {
+    console.log(req.file);
 
-//   console.log(req.file);
-
-// if (
-//   req.file.mimetype === "audio/basic" ||
-//   req.file.mimetype === "audio/mpeg" ||
-//   req.file.mimetype === "audio/vnd.wav" ||
-//   req.file.mimetype === "audio/vorbis" ||
-//   req.file.mimetype === "audio/ogg"
-// ) {
-//   getAudioDurationInSeconds(req.file.path)
-//     .then((duration) => {
-// if (duration < 60) {
-//   duration = duration;
-//   duration = duration.toFixed(3) + " seconds";
-// } else if (duration > 60) {
-//   duration = duration / 60;
-//   duration = duration.toFixed(2) + " minutes";
-// }
-//   db.audioDetails
-//     .create({
-//       audioFile: req.file.path,
-//       audioLength: duration,
-//     })
-//     .then((data) => {
-//       res.json({ message: "File Uploaded!", data });
-//     });
-// })
-// .catch((err) => {
-//   console.error(err);
-// });
-// } else {
-//   res.json({ message: "File type must be audio" });
-// }
+    if (
+      req.file.mimetype === "audio/basic" ||
+      req.file.mimetype === "audio/mpeg" ||
+      req.file.mimetype === "audio/vnd.wav" ||
+      req.file.mimetype === "audio/vorbis" ||
+      req.file.mimetype === "audio/ogg"
+    ) {
+      getAudioDurationInSeconds(req.file.path)
+        .then((duration) => {
+          // if (duration < 60) {
+          //   duration = duration;
+          //   duration = duration.toFixed(3) + " seconds";
+          // } else if (duration > 60) {
+          //   duration = duration / 60;
+          //   duration = duration.toFixed(2) + " minutes";
+          // }
+          db.audioDetails
+            .create({
+              audioName: Date.now() + "-" + req.file.originalname,
+              audioFile: req.file.path,
+              audioLength: duration,
+            })
+            .then((data) => {
+              res.json({ message: "File Uploaded!", data });
+            })
+            .catch((err) => {
+              res.json(err);
+            });
+        })
+        .catch((err) => {
+          res.json(err);
+        });
+    } else {
+      res.json({ message: "File type must be audio" });
+    }
+  };
 // };
+// res.send("hey");
 
 //Play Audio
 // exports.getAudio = (req, res) => {
