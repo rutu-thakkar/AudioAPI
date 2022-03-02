@@ -9,6 +9,7 @@ const {
   addText,
 } = require("../controller/audioController");
 const fs = require("fs");
+const fileUpload = require("express-fileupload")
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -19,8 +20,9 @@ const storage = multer.diskStorage({
   },
 });
 
-var upload = multer({ storage: storage });
-// var upload = multer();
+// var upload = multer({ storage: storage });
+var upload = multer();
+route.use(fileUpload());
 route.get("/", (req, res) => {
   res.render("addAudio");
 });
