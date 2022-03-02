@@ -2,8 +2,8 @@ const db = require("../models");
 const path = require("path");
 const axios = require("axios");
 const { getAudioDurationInSeconds } = require("get-audio-duration");
-const cloudinary = require("cloudinary").v2;
-const streamifier = require("streamifier");
+// const cloudinary = require("cloudinary").v2;
+// const streamifier = require("streamifier");
 require("dotenv").config({ path: "../.env" });
 const fileUpload = require("express-fileupload");
 const app = require("express")();
@@ -113,11 +113,12 @@ const getAudios = (req, res) => {
 // Add Audio File
 const addAudio = async (req, res) => {
   console.log(req.files);
-  if (req.files) {
-    const file = req.files["audioFile"];
-    const fileName = file.name;
 
-    file.mv("./assets/" + fileName, function (err) {
+  if (req.files) {
+    var file = req.files["audioFile"];
+    var fileName = file.name;
+
+    file.mv("./assets/uploads/" + fileName, function (err) {
       if (err)
         return res
           .status(400)
@@ -126,42 +127,43 @@ const addAudio = async (req, res) => {
   } else {
     return res.status(400).send(JSON.stringify({ failed: "No such File" }));
   }
-  return res.status(200).send('{"status":"success"}');
-  // if (
-  //   req.file.mimetype === "audio/basic" ||
-  //   req.file.mimetype === "audio/mpeg" ||
-  //   req.file.mimetype === "audio/vnd.wav" ||
-  //   req.file.mimetype === "audio/vorbis" ||
-  //   req.file.mimetype === "audio/ogg"
-  // ) {
-  //   getAudioDurationInSeconds(req.file.path)
-  //     .then((duration) => {
-  //       // if (duration < 60) {
-  //       //   duration = duration;
-  //       //   duration = duration.toFixed(3) + " seconds";
-  //       // } else if (duration > 60) {
-  //       //   duration = duration / 60;
-  //       //   duration = duration.toFixed(2) + " minutes";
-  //       // }
-  //       db.audioDetails
-  //         .create({
-  //           audioName: Date.now() + "-" + req.file.originalname,
-  //           audioFile: req.file.path,
-  //           audioLength: duration,
-  //         })
-  //         .then((data) => {
-  //           res.json({ message: "File Uploaded!", data });
-  //         })
-  //         .catch((err) => {
-  //           res.json(err);
-  //         });
-  //     })
-  //     .catch((err) => {
-  //       res.json(err);
-  //     });
-  // } else {
-  //   res.json({ message: "File type must be audio" });
-  // }
+  // return res.status(200).send('{"status":"success"}');
+
+  if (
+    req.files["audioFile"].mimetype === "audio/basic" ||
+    req.files["audioFile"].mimetype === "audio/mpeg" ||
+    req.files["audioFile"].mimetype === "audio/vnd.wav" ||
+    req.files["audioFile"].mimetype === "audio/vorbis" ||
+    req.files["audioFile"].mimetype === "audio/ogg"
+  ) {
+    getAudioDurationInSeconds("./assets/uploads/" + file.name)
+      .then((duration) => {
+        // if (duration < 60) {
+        //   duration = duration;
+        //   duration = duration.toFixed(3) + " seconds";
+        // } else if (duration > 60) {
+        //   duration = duration / 60;
+        //   duration = duration.toFixed(2) + " minutes";
+        // }
+        db.audioDetails
+          .create({
+            audioName: Date.now() + "-" + file.name,
+            audioFile: "./assets/uploads/" + file.name,
+            audioLength: duration,
+          })
+          .then((data) => {
+            res.json({ message: "File Uploaded!", data });
+          })
+          .catch((err) => {
+            res.json(err);
+          });
+      })
+      .catch((err) => {
+        res.json(err);
+      });
+  } else {
+    res.json({ message: "File type must be audio" });
+  }
 };
 // };
 // res.send("hey");
