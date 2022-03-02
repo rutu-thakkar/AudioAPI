@@ -29,7 +29,7 @@ route.use(fileUpload());
 //   })
 // );
 route.get("/", (req, res) => {
-  res.render("addAudio");
+  res.json({ message: "welcome! This is API Endpoint" });
 });
 route.get("/getAudios", getAudios);
 route.post("/addAudio", upload.single("audioFile"), addAudio);

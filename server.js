@@ -85,6 +85,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.json());
 app.use("/audio", audioRoutes);
+
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome, This is API endpoint!" });
+});
+
 app.set("view engine", "ejs");
 // app.set("/uploads", express.static(path.join(__dirname, "/uploads")));
 app.use(express.static(path.join(__dirname, "assets")));
