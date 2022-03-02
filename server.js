@@ -8,6 +8,8 @@ const db = require("./models");
 const path = require("path");
 const bodyParser = require("body-parser");
 
+app.use(cors());
+app.options("*", cors());
 // var whitelist = [
 //   "https://audio--manager.herokuapp.com",
 //   "http://localhost:3000/audio/getAudios",
@@ -66,18 +68,18 @@ const bodyParser = require("body-parser");
 //   next();
 // });
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "OPTIONS, GET, POST, PUT, PATCH, DELETE"
-  );
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(200);
-  }
-  next();
-});
+// app.use((req, res, next) => {
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+//   res.setHeader(
+//     "Access-Control-Allow-Methods",
+//     "OPTIONS, GET, POST, PUT, PATCH, DELETE"
+//   );
+//   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+//   if (req.method === "OPTIONS") {
+//     return res.sendStatus(200);
+//   }
+//   next();
+// });
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -88,7 +90,7 @@ app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "assets")));
 
 db.audioDetails
-  .sync({ force: true })
+  .sync({ force: false })
   .then(() => {
     db.user
       .sync({ force: false })
