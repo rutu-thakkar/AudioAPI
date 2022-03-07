@@ -159,7 +159,8 @@ const addAudio = async (req, res) => {
           });
       })
       .catch((err) => {
-        res.json(err);
+        // res.json(err);
+        res.send(err.message);
       });
   } else {
     res.json({ message: "File type must be audio" });
