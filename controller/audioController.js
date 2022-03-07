@@ -115,18 +115,15 @@ const addAudio = async (req, res) => {
   console.log(req.files);
 
   if (req.files) {
-    // var file = req.files["audioFile"];
+    var file = req.files["audioFile"];
     // var fileName = req.files["audioFile"].name;
 
-    req.files["audioFile"].mv(
-      "./assets/uploads/" + req.files["audioFile"].name,
-      function (err) {
-        if (err)
-          return res
-            .status(400)
-            .send(JSON.stringify({ failed: "Something went wrong" }));
-      }
-    );
+    file.mv("./assets/uploads/" + req.files["audioFile"].name, function (err) {
+      if (err)
+        return res
+          .status(400)
+          .send(JSON.stringify({ failed: "Something went wrong" }));
+    });
   } else {
     return res.status(400).send(JSON.stringify({ failed: "No such File" }));
   }
