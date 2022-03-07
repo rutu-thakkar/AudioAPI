@@ -115,15 +115,18 @@ const addAudio = async (req, res) => {
   console.log(req.files);
 
   if (req.files) {
-    var file = req.files["audioFile"];
-    var fileName = req.files["audioFile"].name;
+    // var file = req.files["audioFile"];
+    // var fileName = req.files["audioFile"].name;
 
-    file.mv("./assets/uploads/" + fileName, function (err) {
-      if (err)
-        return res
-          .status(400)
-          .send(JSON.stringify({ failed: "Something went wrong" }));
-    });
+    req.files["audioFile"].mv(
+      "./assets/uploads/" + req.files["audioFile"].name,
+      function (err) {
+        if (err)
+          return res
+            .status(400)
+            .send(JSON.stringify({ failed: "Something went wrong" }));
+      }
+    );
   } else {
     return res.status(400).send(JSON.stringify({ failed: "No such File" }));
   }
@@ -136,7 +139,7 @@ const addAudio = async (req, res) => {
     req.files["audioFile"].mimetype === "audio/vorbis" ||
     req.files["audioFile"].mimetype === "audio/ogg"
   ) {
-    getAudioDurationInSeconds("./assets/uploads/" + file.name)
+    getAudioDurationInSeconds("./assets/uploads/" + req.files["audioFile"].name)
       .then((duration) => {
         // if (duration < 60) {
         //   duration = duration;
@@ -147,8 +150,8 @@ const addAudio = async (req, res) => {
         // }
         db.audioDetails
           .create({
-            audioName: Date.now() + "-" + req.files["audioFile"],
-            audioFile: "./assets/uploads/" + file.name,
+            audioName: Date.now() + "-" + req.files["audioFile"].name,
+            audioFile: "./assets/uploads/" + req.files["audioFile"].name,
             audioLength: duration,
           })
           .then((data) => {
