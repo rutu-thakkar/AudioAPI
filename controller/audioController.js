@@ -118,7 +118,7 @@ const addAudio = async (req, res) => {
     var file = req.files["audioFile"];
     var fileName = req.files["audioFile"].name;
 
-    file.mv("../assets/uploads/" + fileName, function (err) {
+    file.mv("./assets/uploads/" + fileName, function (err) {
       if (err)
         return res
           .status(400)
