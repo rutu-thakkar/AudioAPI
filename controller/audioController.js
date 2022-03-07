@@ -116,7 +116,7 @@ const addAudio = async (req, res) => {
 
   if (req.files) {
     var file = req.files["audioFile"];
-    var fileName = file.name;
+    var fileName = req.files["audioFile"].name;
 
     file.mv("./assets/uploads/" + fileName, function (err) {
       if (err)
@@ -147,7 +147,7 @@ const addAudio = async (req, res) => {
         // }
         db.audioDetails
           .create({
-            audioName: Date.now() + "-" + file.name,
+            audioName: Date.now() + "-" + req.files["audioFile"],
             audioFile: "./assets/uploads/" + file.name,
             audioLength: duration,
           })
