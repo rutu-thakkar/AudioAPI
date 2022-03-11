@@ -173,16 +173,17 @@ const addAudio = async (req, res) => {
 // res.send("hey");
 
 //Play Audio
-// exports.getAudio = (req, res) => {
-//   const { s } = req.params;
-//   // const filePath = path.join("../uploads/", s);
-//   const filePath = path.join("../uploads/", s);
-//   console.log(filePath);
-//   // res.json({
-//   //   filePath: filePath,
-//   // });
-//   res.render("singleAudio", { fileName: s });
-
+const getAudio = (req, res) => {
+  const { filename } = req.params;
+  // const filePath = path.join("../uploads/", s);
+  const filePath = path.join("./assets/uploads/", filename);
+  console.log(filePath);
+  res.send(filePath);
+  // res.json({
+  //   filePath: filePath,
+  // });
+  // res.render("singleAudio", { fileName: s });
+};
 const addText = (req, res) => {
   // console.log(req);
   db.user
@@ -201,4 +202,4 @@ const addText = (req, res) => {
     });
 };
 
-module.exports = { addAudio, getAudios, addText };
+module.exports = { addAudio, getAudios, addText, getAudio };

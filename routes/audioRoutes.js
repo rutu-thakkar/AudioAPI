@@ -7,6 +7,7 @@ const {
   addAudio,
   getAudios,
   addText,
+  getAudio,
 } = require("../controller/audioController");
 const fs = require("fs");
 const fileUpload = require("express-fileupload");
@@ -32,6 +33,7 @@ route.get("/", (req, res) => {
   res.json({ message: "welcome! This is API Endpoint" });
 });
 route.get("/getAudios", getAudios);
+route.get("/getAudio/:filename", getAudio);
 route.post("/addAudio", upload.single("audioFile"), addAudio);
 // route.post("/addAudio", addAudio);
 route.post("/uploadAudio", upload.single("audioFile"), addAudio);
