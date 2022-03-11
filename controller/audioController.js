@@ -30,7 +30,9 @@ const getAudios = (req, res) => {
       return false;
     }
 
-    res.json({ message: "Data", audios });
+    res.send(audios);
+
+    // res.json({ message: "Data", audios });
     // console.log(audios);
     // res.render("viewAudio", { audios });
     // res.json({ audios });
